@@ -68,9 +68,11 @@ void ofApp::update(){
                 // mark the closest blob as matched so that we don't accidentally match it again
                 // on another iteration of this loop
                 closestBlob->matched = true;
+                // update the tracked blob to track the matching blob that we found in this frame
                 tb.blob = closestBlob->blob;
             }
             
+            // create new tracked blobs for any unmatched blobs that were found in this frame
             for (auto cb : currentBlobs) {
                 if (!cb.matched) {
                     blobWithId b;
@@ -94,10 +96,12 @@ void ofApp::update(){
                 tb.matched = false;
             }
             
+            // for each of the blobs found in this frame
             for (auto & cb : currentBlobs) {
                 float recordDistance = FLT_MAX;
                 blobWithId* closestBlob = NULL;
 
+                // find the closest blob that we've been tracking over time
                 for (auto & tb : trackedBlobs) {
                     // consider using distance() instead of squareDistance if this proves inaccurate
                     float distance = cb.blob.centroid.squareDistance(tb.blob.centroid);
@@ -106,19 +110,27 @@ void ofApp::update(){
                         closestBlob = &tb;
                     }
                 }
+                
                 if (closestBlob != NULL) {
+                    // mark the tracked blob as matched so that we don't try to match it again in this loop
                     closestBlob->matched = true;
+                    // update the tracked blob to track the matching blob that we found in this frame
                     closestBlob->blob = cb.blob;
+                    // reset the tracked blob's lifespan because we know it's still around
                     closestBlob->resetLifespan();
                 }
             }
             
+            // decrement the lifespan of any tracked blobs that weren't matched
+            // to a blob found in this frame
             for (auto & tb : trackedBlobs) {
                 if (!tb.matched) {
                     tb.updateLifespan();
                 }
             }
             
+            // remove any tracked blobs that weren't matched to a blob found in this frame
+            // and that have been absent long enough for their lifespan to reach 0
             trackedBlobs.erase(std::remove_if(trackedBlobs.begin(), trackedBlobs.end(), [](blobWithId b) { return !b.matched && b.checkLifespan(); }), trackedBlobs.end());
         }
     }
