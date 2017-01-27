@@ -3,7 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     bLearnBackground = false;
-    blobCounter = 0;
     
     vidGrabber.setDeviceID(1);
     vidGrabber.setVerbose(true);
@@ -32,107 +31,7 @@ void ofApp::update(){
         // 3rd argument is max blob area
         // 4th argument tells the contour finder to try to determine whether there are holes within any blob detected
         contourFinder.findContours(grayDiff, 5, (340*240)/4, 10, false);
-        
-        if (trackedBlobs.empty() && contourFinder.nBlobs > 0) { // no blobs! every blob is a new blob!
-            for (auto blob : contourFinder.blobs) {
-                blobWithId b;
-                b.id = blobCounter;
-                b.blob = blob;
-                b.matched = false;
-                trackedBlobs.push_back(b);
-                blobCounter++;
-            }
-        } else if (trackedBlobs.size() <= contourFinder.nBlobs) {
-            vector<blobWithId> currentBlobs;
-            for (auto blob : contourFinder.blobs) {
-                blobWithId b;
-                b.blob = blob;
-                b.matched = false;
-                currentBlobs.push_back(b);
-            }
-            
-            // for each of the blobs we're tracking over time
-            for (auto & tb : trackedBlobs) {
-                float recordDistance = FLT_MAX;
-                blobWithId* closestBlob = NULL;
-                
-                // find the closest blob among the blobs that we've found in this frame
-                for (auto & cb : currentBlobs) {
-                    // consider using distance() instead of squareDistance if this proves inaccurate
-                    float distance = tb.blob.centroid.squareDistance(cb.blob.centroid);
-                    if (distance < recordDistance && !cb.matched) {
-                        recordDistance = distance;
-                        closestBlob = &cb;
-                    }
-                }
-                // mark the closest blob as matched so that we don't accidentally match it again
-                // on another iteration of this loop
-                closestBlob->matched = true;
-                // update the tracked blob to track the matching blob that we found in this frame
-                tb.blob = closestBlob->blob;
-            }
-            
-            // create new tracked blobs for any unmatched blobs that were found in this frame
-            for (auto cb : currentBlobs) {
-                if (!cb.matched) {
-                    blobWithId b;
-                    b.id = blobCounter;
-                    b.blob = cb.blob;
-                    b.matched = false;
-                    trackedBlobs.push_back(b);
-                    blobCounter++;
-                }
-            }
-        } else if (trackedBlobs.size() > contourFinder.nBlobs) {
-            vector<blobWithId> currentBlobs;
-            for (auto blob : contourFinder.blobs) {
-                blobWithId cb;
-                cb.blob = blob;
-                cb.matched = false;
-                currentBlobs.push_back(cb);
-            }
-            
-            for (auto & tb : trackedBlobs) {
-                tb.matched = false;
-            }
-            
-            // for each of the blobs found in this frame
-            for (auto & cb : currentBlobs) {
-                float recordDistance = FLT_MAX;
-                blobWithId* closestBlob = NULL;
-
-                // find the closest blob that we've been tracking over time
-                for (auto & tb : trackedBlobs) {
-                    // consider using distance() instead of squareDistance if this proves inaccurate
-                    float distance = cb.blob.centroid.squareDistance(tb.blob.centroid);
-                    if (distance < recordDistance && !tb.matched) {
-                        recordDistance = distance;
-                        closestBlob = &tb;
-                    }
-                }
-                
-                if (closestBlob != NULL) {
-                    // mark the tracked blob as matched so that we don't try to match it again in this loop
-                    closestBlob->matched = true;
-                    // update the tracked blob to track the matching blob that we found in this frame
-                    closestBlob->blob = cb.blob;
-                    // reset the tracked blob's lifespan because we know it's still around
-                    closestBlob->resetLifespan();
-                }
-            }
-            
-            // decrement the lifespan of any tracked blobs that weren't matched
-            // to a blob found in this frame
-            for (auto & tb : trackedBlobs) {
-                if (!tb.matched) {
-                    tb.updateLifespan();
-                }
-            }
-            
-            // remove any tracked blobs that weren't matched to a blob found in this frame
-            // and that have been absent long enough for their lifespan to reach 0
-            trackedBlobs.erase(std::remove_if(trackedBlobs.begin(), trackedBlobs.end(), [](blobWithId b) { return !b.matched && b.checkLifespan(); }), trackedBlobs.end());
-        }
+        blobTracker.track(contourFinder.blobs);
     }
 }
 
@@ -144,8 +43,8 @@ void ofApp::draw(){
     ofDrawRectangle(320, 0, 320, 240);
     contourFinder.draw(320, 0, 320, 240);
     ofColor c(255, 255, 255);
-    for(int i = 0; i < trackedBlobs.size(); i++) {
-        blobWithId b = trackedBlobs.at(i);
+    for(int i = 0; i < blobTracker.trackedBlobs.size(); i++) {
+        BlobWithId b = blobTracker.trackedBlobs.at(i);
         ofRectangle r = b.blob.boundingRect;
         r.x += 320; r.y += 240;
         c.setHsb(i * 64, 255, 255);

@@ -2,29 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
-
-const int BLOB_LIFESPAN = 25;
-
-typedef struct blobWithId {
-    ofxCvBlob blob;
-    int id;
-    bool matched;
-    int lifespan;
-    
-    blobWithId(): blob(ofxCvBlob()), id(0), matched(false), lifespan(BLOB_LIFESPAN){}
-    
-    void updateLifespan() {
-        lifespan--;
-    }
-    
-    void resetLifespan() {
-        lifespan = BLOB_LIFESPAN;
-    }
-    
-    bool checkLifespan() {
-        return lifespan < 0;
-    }
-} blobWithId;
+#include "BlobTracker.h"
 
 class ofApp : public ofBaseApp{
 
@@ -50,6 +28,5 @@ class ofApp : public ofBaseApp{
         ofxCvColorImage colorImg;
         ofxCvGrayscaleImage grayImage, grayBg, grayDiff;
         ofxCvContourFinder contourFinder;
-        vector<blobWithId> trackedBlobs;
-        int blobCounter;
+        BlobTracker blobTracker;
 };
