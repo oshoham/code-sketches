@@ -29,4 +29,5 @@ class ofApp : public ofBaseApp{
         ofxCvGrayscaleImage grayImage, grayBg, grayDiff;
         ofxCvContourFinder contourFinder;
         BlobTracker blobTracker;
+        int threshold;
 };

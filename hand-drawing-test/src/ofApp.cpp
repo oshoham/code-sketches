@@ -12,21 +12,37 @@ void ofApp::setup(){
     grayImage.allocate(320,240);
     grayBg.allocate(320,240);
     grayDiff.allocate(320,240);
+    
+    threshold = 80;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    // Ask the video player to update itself
     vidGrabber.update();
+    
     //do we have a new frame?
     if (vidGrabber.isFrameNew()){
+        
+        // Copy the data from the video player into an ofxCvColorImage
         colorImg.setFromPixels(vidGrabber.getPixels());
-        grayImage = colorImg; // convert our color image to a grayscale image
+        
+        // Make a grayscale version of colorImg in grayImage
+        grayImage = colorImg;
+        
+        // If it's time to learn the background;
+        // copy the data from grayImage into grayBg
         if (bLearnBackground == true) {
-            grayBg = grayImage; // update the background image
-            bLearnBackground = false;
+            grayBg = grayImage; // Note: this is 'operator overloading'
+            bLearnBackground = false; // Latch: only learn it once.
         }
+        
+        // Take the absolute value of the difference
+        // between the background and incoming images.
         grayDiff.absDiff(grayBg, grayImage);
-        grayDiff.threshold(30);
+        
+        // Perform an in-place thresholding of the difference image.
+        grayDiff.threshold(threshold);
         // 2nd argument is min blob area
         // 3rd argument is max blob area
         // 4th argument tells the contour finder to try to determine whether there are holes within any blob detected
