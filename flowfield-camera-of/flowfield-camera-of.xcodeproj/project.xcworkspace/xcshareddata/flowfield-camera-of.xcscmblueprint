@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "85640C50ED93E5C1C316C7EC4419142F963D58A5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "85640C50ED93E5C1C316C7EC4419142F963D58A5" : 9223372036854775807,
+    "20051C6FB5BD45327E80FEE0E12F8594752451BF" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9299F0FE-BCA7-4016-BEAC-94AEB08CA9EB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "85640C50ED93E5C1C316C7EC4419142F963D58A5" : "sketches\/",
+    "20051C6FB5BD45327E80FEE0E12F8594752451BF" : "of_v0.9.8_osx_release\/addons\/ofxVectorField\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "flowfield-camera-of",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "flowfield-camera-of\/flowfield-camera-of.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mantissa\/ofxVectorField.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "20051C6FB5BD45327E80FEE0E12F8594752451BF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:oshoham\/code-sketches.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "85640C50ED93E5C1C316C7EC4419142F963D58A5"
+    }
+  ]
+}

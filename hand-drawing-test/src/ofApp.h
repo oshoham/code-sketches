@@ -2,7 +2,9 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
+#include "ofxCv.h"
 #include "BlobTracker.h"
+#include "Follower.h"
 
 class ofApp : public ofBaseApp{
 
@@ -30,4 +32,7 @@ class ofApp : public ofBaseApp{
         ofxCvContourFinder contourFinder;
         BlobTracker blobTracker;
         int threshold;
+    
+        ofxCv::ContourFinder contourFinder2;
+        ofxCv::RectTrackerFollower<BlobFollower> tracker;
 };

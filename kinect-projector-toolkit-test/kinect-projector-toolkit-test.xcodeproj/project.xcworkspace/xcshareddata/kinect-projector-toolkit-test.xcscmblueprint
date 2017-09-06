@@ -1,0 +1,44 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "85640C50ED93E5C1C316C7EC4419142F963D58A5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D9F52E6B50C836A90709491B3A1E16B7BCB9BE5F" : 9223372036854775807,
+    "FE87873B02C5E6719395DDAC8C0C0C585EF1FA8F" : 9223372036854775807,
+    "37526DA425E5430474A14FBFA1BC4525160B5FC1" : 9223372036854775807,
+    "85640C50ED93E5C1C316C7EC4419142F963D58A5" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D02304C9-9354-4E67-8996-5C39D17644CE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D9F52E6B50C836A90709491B3A1E16B7BCB9BE5F" : "of_v0.9.8_osx_release\/addons\/ofxKinectProjectorToolkit\/",
+    "FE87873B02C5E6719395DDAC8C0C0C585EF1FA8F" : "of_v0.9.8_osx_release\/addons\/ofxSecondWindow\/",
+    "37526DA425E5430474A14FBFA1BC4525160B5FC1" : "of_v0.9.8_osx_release\/addons\/ofxCv\/",
+    "85640C50ED93E5C1C316C7EC4419142F963D58A5" : "sketches\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "kinect-projector-toolkit-test",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "kinect-projector-toolkit-test\/kinect-projector-toolkit-test.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kylemcdonald\/ofxCv.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "37526DA425E5430474A14FBFA1BC4525160B5FC1"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:oshoham\/code-sketches.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "85640C50ED93E5C1C316C7EC4419142F963D58A5"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/genekogan\/ofxKinectProjectorToolkit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D9F52E6B50C836A90709491B3A1E16B7BCB9BE5F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/genekogan\/ofxSecondWindow.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FE87873B02C5E6719395DDAC8C0C0C585EF1FA8F"
+    }
+  ]
+}
