@@ -3,14 +3,26 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     frameRate = 30;
-    minDelay = 3;
-    maxDelay = 60;
+    minDelay = 0.1;
+    maxDelay = 1;
     
     grabber.setDesiredFrameRate(frameRate);
     grabber.setup(320, 240);
     ofSetFrameRate(frameRate);
     
     mainOutputSyphonServer.setName("Screen Output");
+    
+//    auto devices = soundStream.getDeviceList();
+//    auto devices = soundStream.getMatchingDevices("Apple Inc.: Aggregate Device");
+//    if(!devices.empty()){
+//        soundStream.setDevice(devices[0]);
+//    }
+//    soundStream.setup(2, 2, 44100, 256, 4);
+    ofSoundStreamSetup(2, 2);
+    soundBuffer.allocate(256, 2);
+    audioBufferDuration = 256.0 / 44100.0; // ~0.005804988662
+    
+    soundDelayBuffer.setup(44100, 2);
     
     buffers.resize(NUM_BUFFERS);
     for (int i = 0; i < buffers.size(); i++) {
@@ -67,6 +79,26 @@ void ofApp::draw(){
     }
     
     mainOutputSyphonServer.publishScreen();
+}
+
+//--------------------------------------------------------------
+void ofApp::audioIn(ofSoundBuffer &inBuffer) {
+//    soundBuffer = inBuffer;
+    ofSoundBuffer tone;
+    tone.allocate(inBuffer.getNumFrames(), inBuffer.getNumChannels());
+    tone.fillWithTone();
+    soundDelayBuffer.addSamples(tone);
+}
+
+//--------------------------------------------------------------
+void ofApp::audioOut(ofSoundBuffer &outBuffer) {
+//    outBuffer = soundBuffer;
+    int numChannels = outBuffer.getNumChannels();
+    for (int i = 0; i < outBuffer.getNumFrames(); i++) {
+        for (int j = 0; j < numChannels; j++) {
+            outBuffer[i * numChannels + j] = soundDelayBuffer.getDelayedSample(22050 + i, j);
+        }
+    }
 }
 
 //--------------------------------------------------------------
